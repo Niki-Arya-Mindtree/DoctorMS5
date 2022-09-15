@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class DoctorEntity {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int Id;
 	@Column(name = "Name")
 	private String Name;

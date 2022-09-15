@@ -1,6 +1,5 @@
 package com.doctor.main.controld;
 
-import java.awt.image.RescaleOp;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.doctor.main.exception.EmptyData;
-import com.doctor.main.exception.ExcepMessg;
+import com.doctor.main.entities.DoctorEntity;
 import com.doctor.main.service.Services;
 
 @RestController
@@ -26,8 +24,8 @@ public class DocControl {
 		try {
 			return new ResponseEntity<>(serv.getAll(),HttpStatus.FOUND);
 		} 
-		catch (EmptyData e) {
-			return new ResponseEntity<>(new ExcepMessg(e.getLocalizedMessage()),HttpStatus.NO_CONTENT);
+		catch (Exception e) {
+			return new ResponseEntity<>("Empty DataBase",HttpStatus.NO_CONTENT);
 		}
 	}
 	
@@ -37,19 +35,15 @@ public class DocControl {
 		try {
 			return new ResponseEntity<>(serv.oneData(Id),HttpStatus.FOUND);
 		} 
-		catch (EmptyData e) {
-			return new ResponseEntity<>(new ExcepMessg("No ID"),HttpStatus.NOT_FOUND);
+		catch (Exception e) {
+			return new ResponseEntity<>("No Data With this respective Id",HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@PostMapping("/Doctor_data")
-	public ResponseEntity<?> saveOneData(@RequestBody int Id){
-		try {
-			return new ResponseEntity<>(serv.getAll(),HttpStatus.ACCEPTED);
-		} 
-		catch (EmptyData e) {
-			return new ResponseEntity<>(new ExcepMessg(e.getMessage()),HttpStatus.FOUND);
-		}
+	public ResponseEntity<?> saveOneData(@RequestBody DoctorEntity de){
+			serv.saveData(de);
+			return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
 }
