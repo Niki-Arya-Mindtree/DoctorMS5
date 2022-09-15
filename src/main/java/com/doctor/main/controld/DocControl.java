@@ -27,7 +27,7 @@ public class DocControl {
 			return new ResponseEntity<>(serv.getAll(),HttpStatus.FOUND);
 		} 
 		catch (EmptyData e) {
-			return new ResponseEntity<>(new ExcepMessg(e.getMessage()),HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(new ExcepMessg(e.getLocalizedMessage()),HttpStatus.NO_CONTENT);
 		}
 	}
 	
@@ -35,20 +35,20 @@ public class DocControl {
 	@GetMapping("/Doctor_data/{Id}")
 	public ResponseEntity<?> getOneData(@PathVariable int Id){
 		try {
-			return new ResponseEntity<>(serv.getAll(),HttpStatus.FOUND);
+			return new ResponseEntity<>(serv.oneData(Id),HttpStatus.FOUND);
 		} 
 		catch (EmptyData e) {
-			return new ResponseEntity<>(new ExcepMessg(e.getMessage()),HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(new ExcepMessg("No ID"),HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@PostMapping("/Doctor_data")
 	public ResponseEntity<?> saveOneData(@RequestBody int Id){
 		try {
-			return new ResponseEntity<>(serv.getAll(),HttpStatus.FOUND);
+			return new ResponseEntity<>(serv.getAll(),HttpStatus.ACCEPTED);
 		} 
 		catch (EmptyData e) {
-			return new ResponseEntity<>(new ExcepMessg(e.getMessage()),HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(new ExcepMessg(e.getMessage()),HttpStatus.FOUND);
 		}
 	}
 	

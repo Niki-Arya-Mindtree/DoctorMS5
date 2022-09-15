@@ -18,25 +18,36 @@ public class Services {
 	public List<DoctorEntity> getAll() throws EmptyData
 	{
 		
-		if(drepo.findAll().size()==0)
+		
+		try {
+			if(drepo.findAll().size()==0)
+				throw new Exception();
+		} catch (Exception e) {
 			throw new EmptyData("Empty DataBase");
+		}
+		
 		return drepo.findAll();
 	
 	}
 
 	public DoctorEntity oneData(int Id) throws EmptyData
 	{
-		
-		if(drepo.findById(Id)==null)
+		try {
+			drepo.findById(Id);
+		} catch (Exception e) {
 			throw new EmptyData("Wrong Id");
-		return drepo.getById(Id);
-	
+		}
+		return drepo.findById(Id).get();
 	}
 	
 	public void saveData(DoctorEntity dent) throws EmptyData
 	{
-		if(drepo.findById(dent.getId())!=null)
+		try {
+			if(drepo.findById(dent.getId())!=null)
+				throw new Exception();
+		} catch (Exception e) {
 			throw new EmptyData("The Id is already Repeated plz check the data");
+		}
 		drepo.saveAndFlush(dent);
 	
 	}
